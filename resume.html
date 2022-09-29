@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://code.jquery.com/jquery-3.6.1.min.js" integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto+Slab:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <script src="https://cdn.anychart.com/releases/8.11.0/js/anychart-core.min.js" type="text/javascript"></script>
+  <script src="https://cdn.anychart.com/releases/8.11.0/js/anychart-map.min.js" type="text/javascript"></script>
+  <script src="https://cdn.anychart.com/releases/8.11.0/geodata/custom/world/world.js"></script>
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/proj4js/2.3.15/proj4.js" data-export="true"></script>
+
+
+    <script>
+jQuery.fn.reverse=[].reverse,function(t){t.magneticScroll=function(o){var e={selector:".magnetic",easing:"swing",speed:500,timeout:200,beforeScroll:t.noop,afterScroll:t.noop},a=t.extend(e,o),r={animateScroll:function(o,e,r){a.beforeScroll(),t("html, body").stop().animate({scrollTop:e+"px"},a.speed,a.easing,function(){setTimeout(function(){t("html,body").stop().removeClass("scrolling"),a.afterScroll(o,r)},a.timeout)})}};t(document).ready(function(){t(a.selector).each(function(){t(this).attr("data-offset",t(this).offset().top)});var o=/Firefox/i.test(navigator.userAgent)?"DOMMouseScroll":"mousewheel";t("body:not(.scrolling)").bind(o,function(o){if(o.preventDefault(),t(this).hasClass("scrolling"))o.preventDefault();else{t(this).addClass("scrolling");var e=t(window).scrollTop(),s=window.event||o;s=s.originalEvent?s.originalEvent:s;var l=s.detail?-40*s.detail:s.wheelDelta;if(l>0)t(window).scrollTop()>0?t(a.selector).reverse().each(function(){var o=0;return Math.round(t(this).attr("data-offset"))<Math.round(e)?(r.animateScroll(t(this),t(this).attr("data-offset"),"up"),o=1,!1):void(0===o&&r.animateScroll(t(this),0,"up"))}):t("html,body").stop().removeClass("scrolling");else{var n=!0;t(a.selector).each(function(){return Math.round(t(this).attr("data-offset"))>Math.round(e)?(n=!1,r.animateScroll(t(this),t(this).attr("data-offset"),"down"),!1):void 0}),n&&t("html,body").stop().removeClass("scrolling")}}o.stopPropagation()})}).keydown(function(o){var e=t(window).scrollTop(),s=o.which;if(38==s)o.preventDefault(),t("body").hasClass("scrolling")||(t("body").addClass("scrolling"),t(a.selector).reverse().each(function(){return Math.round(t(this).attr("data-offset"))<Math.round(e)?(r.animateScroll(t(this),t(this).attr("data-offset"),"up"),!1):void 0}));else if(40==s&&(o.preventDefault(),!t("body").hasClass("scrolling"))){t("body").addClass("scrolling");var l=!0;t(a.selector).each(function(){return Math.round(t(this).attr("data-offset"))>Math.round(e)?(l=!1,r.animateScroll(t(this),t(this).attr("data-offset"),"down"),!1):void 0}),l&&t("html,body").stop().removeClass("scrolling")}})}}(jQuery);
+    </script>
+    <title>Document</title>
+    <script>
+        window.onload = function() {
+            document.body.className += " loaded";
+        }
+
+        $.magneticScroll()  ;
+    </script>
+    <style>
+        .font-roboto{
+            font-family: 'Roboto Slab', serif;
+        }
+        .font-montserrat{
+            font-family: 'Montserrat', serif;
+        }
+        .font-inter{
+            font-family: 'Inter', sans-serif;
+        }
+        .title-name{
+            opacity: 0;
+        }
+        body.loaded .title-name{
+            animation-name: fadein;
+            animation-duration: 2s;
+            opacity: 100%;
+        }
+        .slide-up-1{
+            animation: fadein 1s 2s forwards;
+            opacity: 0%;
+        }
+        .slide-up-2{
+            animation: fadein 1s 3s forwards;
+            opacity: 0%;
+        }
+        @keyframes fadein {
+            from { 
+                opacity: 0;
+                transform: translateY(100%);
+            }
+            to   { 
+                opacity: 1;
+                transform: translateY(0%);
+            }
+          }
+
+          .slide-hidden{
+            transform: translateY(100%);
+            opacity: 0%;
+          } 
+          .slide-in{
+            animation-delay: .5s;
+            opacity: 0%;
+            transform: translateY(100%);
+            animation:slide-up .5s forwards .5s;
+          }
+          @keyframes slide-up {
+            from{
+                opacity: 0%;
+                transform: translateY(100%);
+            }
+            to{
+                opacity: 100%;
+                transform: translateY(0%);
+            }
+            
+          }
+
+/* This container is needed to position the front and back side */
+.flip-card-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  transition: transform 0.8s;
+  transform-style: preserve-3d;
+}
+
+/* Do an horizontal flip when you move the mouse over the flip box container */
+.flip-card:hover .flip-card-inner {
+  transform: rotateY(180deg);
+}
+
+/* Position the front and back side */
+.flip-card-front, .flip-card-back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  -webkit-backface-visibility: hidden; /* Safari */
+  backface-visibility: hidden;
+}
+
+
+
+/* Style the back side */
+.flip-card-back {
+  transform: rotateY(180deg);
+}
+    </style>
+</head>
+<body class="bg-black ">
+    <div class="grid grid-cols-1 md:grid-cols-2 md:h-screen magnetic gap-5">
+        <div class="md:h-screen flex text-white">
+            <div class="my-auto text-center w-full title-name">
+                <h2 class="text-6xl font-roboto text-center mx-auto w-full">John Nicolás <br> León Kabarity</h2>
+                <div class="font-normal font-inter mt-5">
+                    <div class="my-5"> <a class="border border-white p-2 hover:bg-white hover:text-black transition duration-500" href="tel:+34640570454"> <span class="material-symbols-outlined align-middle">call</span> +34 640 57 04 54</a> </div>
+                    <div class="my-5"> <a class="border border-white p-2 hover:bg-white hover:text-black transition duration-500" href="mailto:johnnicolasleon@gmail.com"> <span class="material-symbols-outlined align-middle">mail</span> johnnicolasleon@gmail.com</a> </div>
+                    <div class="my-5"> <a class="border border-white p-2 hover:bg-white hover:text-black transition duration-500" href="https://www.linkedin.com/in/john-nicolas-leon-kabarity/"> LinkedIn: John Nicolás León Kabarity</a> </div>
+                </div>
+                <div class="my-12 font-inter flex">
+                    <a class="border border-white p-2 hover:bg-white hover:text-black transition duration-500 m-2 ml-auto" href="#educacion">Educación</a>
+                    <a class="border border-white p-2 hover:bg-white hover:text-black transition duration-500 m-2 " href="#formacion-complementaria">Formación complementaria</a>
+                    <a class="border border-white p-2 hover:bg-white hover:text-black transition duration-500 m-2 mr-auto" href="#competencias">Competencias</a>
+                </div>
+                <div class="font-inter flex">
+                    <a class="border border-white p-2 hover:bg-white hover:text-black transition duration-500 m-2 ml-auto" href="#competencias-linguisticas">Competencias Lingüísticas</a>
+                    <a class="border border-white p-2 hover:bg-white hover:text-black transition duration-500 m-2 mr-auto" href="#soft-skills">Soft Skills y Aptitudes</a>
+                </div>
+            </div>
+        </div>
+        <div>
+            <img class="slide-in h-screen mx-auto md:ml-auto object-cover" src="me-3c.jpeg" alt="">
+        </div>
+    </div>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-5 md:h-screen magnetic mt-5" id="educacion">
+        <div class="md:h-screen text-center md:text-rightcol-span-1">
+            <h2 class="title-name text-4xl xl:text-5xl text-white font-bold font-montserrat mt-10 md:mt-48">Educación.</h2>
+        </div>
+        <div class="md:border-l border-white text-white p-5 font-inter md:col-span-2">
+            <div>
+                <ul class="list-disc font-light text-xl ml-10">
+                    <li class="my-10">2018 - 2020: 
+                        <div>Estudios de Bachillerato, Modalidad científica</div>
+                        <div>
+                            <span class="material-symbols-outlined align-middle">pin_drop</span>
+                            <a class="text-blue-500 hover:text-blue-400 transition no-underline hover:underline" href="https://valle.fesofiabarat.es/">Colegio Santa María del Valle</a>
+                        </div>
+                    </li>
+                    <li class="my-10">2020 - 2021:
+                        <div> Grado en Física 
+                        <div>
+                            <span class="material-symbols-outlined align-middle">pin_drop</span>
+                            <a class="text-blue-500 hover:text-blue-400 transition no-underline hover:underline" href="https://www.us.es/">Universidad de Sevilla</a>
+                        </div>
+                    </div>
+                    </li>
+                    <li class="my-10">2021 - Actualidad:
+                        <div>Grado en Ingeniería Mecánica</div>
+                        <div>
+                            <span class="material-symbols-outlined align-middle">pin_drop</span>
+                            <a class="text-blue-500 hover:text-blue-400 transition no-underline hover:underline" href="https://www.us.es/">Universidad de Sevilla</a>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-5 md:h-screen magnetic " id="formacion-complementaria">
+        <div class="md:h-screen text-center md:text-rightcol-span-1">
+            <h2 class="title-name  text-4xl xl:text-5xl text-white font-bold font-montserrat mt-10 md:mt-48">Formación Complementaria y voluntariados.</h2>
+        </div>
+        <div class="md:border-l border-white text-white p-5 font-inter md:col-span-2">
+            <div>
+                <ul class="list-disc font-light text-xl ml-10">
+                    <li class="my-10">2020: 
+                        <div>Participante en el programa de formación Sputnik.</div>
+                    </li>
+                    <li class="my-10">2022:
+                        <div> Participante en el Seminario <b class="font-medium">Líderes del Futuro</b>, por la Fundación Eduarda Justo.</div>
+                        <div> Participante en <b class="font-medium">Campamento Emprendimiento</b>, organizado por la Andalucía Emprende.</div>
+                    </li>
+                    <li class="my-10">2017 - Actualidad:
+                        <div>Voluntario en el Banco de Aliementos de Sevilla.</div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-5 md:h-screen magnetic " id="competencias">
+        <div class="md:h-screen text-center md:text-rightcol-span-1">
+            <h2 class="title-name  text-4xl xl:text-5xl text-white font-bold font-montserrat mt-10 md:mt-48" >Competencias.</h2>
+        </div>
+        <div class="md:border-l border-white text-white p-5 font-inter md:col-span-2">
+            <div>
+                <ul class="list-disc font-light text-xl ml-10">
+                    <li class="my-10">Javascript (Node.js) 
+                        <div>Nivel medio</div>
+                    </li>
+                    <li class="my-10">Python 
+                        <div>Avanzado. Orientado a data science.</div>
+                    </li>
+                    <li class="my-10">PHP
+                        <div>Avanzado. Desarrollo completo de aplicaciones web.</div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-5 md:h-screen magnetic " id="competencias-linguisticas">
+        <div class="md:h-screen text-center md:text-rightcol-span-1">
+            <h2 class="title-name  text-4xl xl:text-5xl text-white font-bold font-montserrat mt-10 md:mt-48" >Competencias Linguísticas.</h2>
+        </div>
+        <div class="md:border-l border-white text-white p-5 font-inter md:col-span-2">
+            <div>
+                <h5 class="text-gray-400">Mapa de idiomas hablados.</h5>
+                <hr class="my-2">
+                <div id="container" class="w-3/4 mx-auto aspect-video"></div>
+                <div class="my-5 text-lg">
+                    <ul class="list-disc ml-10">
+                        <li class="my-4">Español: Competencia Bilingüe o nativa</li>
+                        <li class="my-4">Inglés: Competencia Bilingüe o nativa</li>
+                        <li class="my-4">Francés: Competencia laboral Básica (B1)</li>
+                        <li class="my-4">Árabe: Competencia oral</li>
+                    </ul>
+                </div>
+            </div>
+
+            <script>
+             anychart.onDocumentReady(function() {
+  // create map
+  var map = anychart.map();
+
+  // create data set
+  var SpanishdataSet = anychart.data.set(
+      [
+			{"id":"ES","value": 'Español'},
+			{"id":"MX","value":'Español'},
+			{"id":"CO","value":'Español'},
+			{"id":"AR","value":'Español'},
+			{"id":"PE","value":'Español'},
+			{"id":"CL","value":'Español'},
+			{"id":"VE","value":'Español'},
+			{"id":"GT","value":'Español'},
+			{"id":"CU","value":'Español'},
+			{"id":"DO","value":'Español'},
+			{"id":"HN","value":'Español'},
+			{"id":"PY","value":'Español'},
+			{"id":"NI","value":'Español'},
+			{"id":"CR","value":'Español'},
+			{"id":"PA","value":'Español'},
+			{"id":"UY","value":'Español'},
+			{"id":"GQ","value":'Español'},
+			{"id":"BO","value":'Español'},
+			{"id":"EC","value":'Español'},
+			]
+  );
+
+  var spanishLang = anychart.data.loadJsonFile(
+        'https://cdn.anychart.com/samples/maps-choropleth/spanish-language-on-world-map/data.json');
+
+  var FrenchdataSet = anychart.data.set([
+            
+			{"id":"BE","value":'Francés'},
+            {"id":"FR","value":'Francés'},
+            {"id":"BJ","value":'Francés'},
+            {"id":"BF","value":'Francés'},
+            {"id":"CH","value":'Francés'},
+            {"id":"CD","value":'Francés'},
+            {"id":"CG","value":'Francés'},
+            {"id":"GA","value":'Francés'},
+            {"id":"CI","value":'Francés'},
+            {"id":"ER","value":'Francés'},
+            {"id":"ML","value":'Francés'},
+            {"id":"MC","value":'Francés'},
+            {"id":"NE","value":'Francés'},
+            {"id":"SN","value":'Francés'},
+            {"id":"TG","value":'Francés'},
+  ]);
+
+  var PortuguesedataSet = anychart.data.set([
+            
+  ]);
+
+  var EnglishdataSet = anychart.data.set([
+            {"id":"GB","value":'Inglés'},
+			{"id":"US","value":'Inglés'},
+			{"id":"CA","value":'Inglés / Francés'},
+			{"id":"AG","value":'Inglés'},
+			{"id":"BS","value":'Inglés'},
+			{"id":"BB","value":'Inglés'},
+			{"id":"BZ","value":'Inglés'},
+			{"id":"BW","value":'Inglés'},
+			{"id":"BI","value":'Inglés'},
+			{"id":"CM","value":'Inglés'},
+			{"id":"DM","value":'Inglés'},
+			{"id":"SZ","value":'Inglés'},
+			{"id":"FJ","value":'Inglés'},
+			{"id":"GM","value":'Inglés'},
+			{"id":"GH","value":'Inglés'},
+			{"id":"GD","value":'Inglés'},
+			{"id":"GY","value":'Inglés'},
+			{"id":"IE","value":'Inglés'},
+			{"id":"JM","value":'Inglés'},
+			{"id":"KE","value":'Inglés'},
+			{"id":"KI","value":'Inglés'},
+			{"id":"LS","value":'Inglés'},
+			{"id":"LR","value":'Inglés'},
+			{"id":"MW","value":'Inglés'},
+			{"id":"MT","value":'Inglés'},
+			{"id":"MH","value":'Inglés'},
+			{"id":"MU","value":'Inglés'},
+			{"id":"FM","value":'Inglés'},
+			{"id":"NA","value":'Inglés'},
+			{"id":"NR","value":'Inglés'},
+			{"id":"NG","value":'Inglés'},
+			{"id":"PW","value":'Inglés'},
+			{"id":"PG","value":'Inglés'},
+			{"id":"ZA","value":'Inglés'},
+			{"id":"AU","value":'Inglés'},
+			{"id":"NZ","value":'Inglés'},
+  ]);
+
+  // create choropleth series
+  spanishSeries = map.choropleth(SpanishdataSet);
+  frenchSeries = map.choropleth(FrenchdataSet);
+  portugueseSeries = map.choropleth(PortuguesedataSet);
+  englishSeries = map.choropleth(EnglishdataSet);
+  spanishLang = map.choropleth(spanishLang);
+
+  // set geoIdField to 'id', this field contains in geo data meta properties
+  spanishSeries.geoIdField('id');
+  frenchSeries.geoIdField('id');
+  portugueseSeries.geoIdField('id');
+  englishSeries.geoIdField('id');
+  spanishLang.geoIdField('id');
+
+  // set map color settings
+  spanishSeries.colorScale(anychart.scales.linearColor('#ff7d97', '#ff4066'));
+  spanishSeries.hovered().fill('#ff4066');
+
+  frenchSeries.colorScale(anychart.scales.linearColor('#75a5ff', '#2b75ff'));
+  frenchSeries.hovered().fill('#2b75ff');
+
+  portugueseSeries.colorScale(anychart.scales.linearColor('#66ff9c', '#21ff6f'));
+  portugueseSeries.hovered().fill('#21ff6f');
+
+  englishSeries.colorScale(anychart.scales.linearColor('#c273ff', '#a42eff'));
+  englishSeries.hovered().fill('#a42eff');
+
+  // set geo data, you can find this map in our geo maps collection
+  // https://cdn.anychart.com/#maps-collection
+  map.geoData('anychart.maps.world');
+
+
+  //set map container id (div)
+  map.container('container');
+
+  //initiate map drawing
+  map.draw();
+});
+            </script>
+        </div>
+    </div>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-5 md:h-screen magnetic " id="soft-skills">
+        <div class="md:h-screen text-center md:text-rightcol-span-1">
+            <h2 class="title-name  text-4xl xl:text-5xl text-white font-bold font-montserrat mt-10 md:mt-48">Mis Soft Skills y aptitudes.</h2>
+        </div>
+        <div class="md:border-l border-white text-white p-5 font-roboto font-medium text-3xl md:col-span-2">
+            <div class="grid grid-cols-2 xl:grid-cols-3 gap-5">
+                <div class="flip-card w-full aspect-square  transition">
+                    <div class="flip-card-inner">
+                        <div class="flip-card-front bg-red-400">
+                            <div class="mt-10">
+                                <img src="communication-skill.png" class="w-full aspect-video object-contain" alt="">
+                            </div>
+                            <div class="text-center">Comunicación</div>
+                        </div>
+                        <div class="flip-card-back font-roboto bg-red-400 text-justify">
+                            <div class="mt-10">
+                                <img src="communication-skill.png" class="w-full aspect-video object-contain" alt="">
+                            </div>
+                            <div class="text-center">Comunicación</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="flip-card w-full aspect-square  transition">
+                    <div class="flip-card-inner">
+                        <div class="flip-card-front bg-blue-300">
+                            <div class="mt-10">
+                                <img src="problem-solving.png" class="w-full aspect-video object-contain" alt="">
+                            </div>
+                            <div class="text-center ">Problem-Solving</div>
+                        </div>
+                        <div class="flip-card-back font-roboto bg-blue-300 text-justify p-10">
+                            <div class="mt-10">
+                                <img src="problem-solving.png" class="w-full aspect-video object-contain" alt="">
+                            </div>
+                            <div class="text-center">Problem-Solving</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="flip-card w-full aspect-square  transition">
+                    <div class="flip-card-inner">
+                        <div class="flip-card-front bg-lime-300">
+                            <div class="mt-10">
+                                <img src="563516.png" class="w-full aspect-video object-contain" alt="">
+                            </div>
+                            <div class="text-center">Pensamiento crítico</div>
+                        </div>
+                        <div class="flip-card-back font-roboto bg-lime-300 text-justify p-10">
+                            <div class="mt-10">
+                                <img src="563516.png" class="w-full aspect-video object-contain" alt="">
+                            </div>
+                            <div class="text-center">Pensamiento crítico</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="flip-card w-full aspect-square  transition">
+                    <div class="flip-card-inner">
+                        <div class="flip-card-front bg-teal-300">
+                            <div class="mt-10">
+                                <img src="860398.png" class="w-full aspect-video object-contain" alt="">
+                            </div>
+                            <div class="text-center">Liderazgo</div>
+                        </div>
+                        <div class="flip-card-back font-roboto bg-teal-300 text-justify p-10">
+                            <div class="mt-10">
+                                <img src="860398.png" class="w-full aspect-video object-contain" alt="">
+                            </div>
+                            <div class="text-center">Liderazgo</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="flip-card w-full aspect-square  transition">
+                    <div class="flip-card-inner">
+                        <div class="flip-card-front bg-orange-300">
+                            <div class="mt-10">
+                                <img src="1714291-200.png" class="w-full aspect-video object-contain" alt="">
+                            </div>
+                            <div class="text-center">Adaptabilidad</div>
+                        </div>
+                        <div class="flip-card-back font-roboto bg-orange-300 text-justify p-10">
+                            <div class="mt-10">
+                                <img src="1714291-200.png" class="w-full aspect-video object-contain" alt="">
+                            </div>
+                            <div class="text-center">Adaptabilidad</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-5 md:h-screen magnetic " id="">
+        <div class="md:h-screen text-center md:text-right col-span-1">
+            <h2 class="title-name  text-4xl xl:text-5xl text-white font-bold font-montserrat mt-10 md:mt-48">Sobre mí.</h2>
+        </div>
+        <div class="md:border-l border-white text-white p-5 font-inter text-lg md:col-span-2 font-thin  mx-auto text-justify">
+            <div class="w-11/12 md:w-3/4 mx-auto mt-10">
+                <p>Soy John Nicolás León Kabarity, actual estudiante de Ingeniería Mecánica; aunque lo que estudio no me define, pues me estaría limitando.</p>
+            <p>Desde pequeño he buscado encontrar las maneras de usar todas las herramientas que encontraba a mi disposición para mejorar mi vida y de los que me rodean. Aprovechaba cualquier
+                oportunidad para arreglar algún electrodoméstico, ayudar con algún problema emocional a mis hermanos, aprender a tocar los instrumentos que me encontraba. En fin, aprovechar las 
+                situaciones que la vida me ponía por delante.
+            </p><br>
+            <p>El hecho de aprender a aprovechar las oportunidades, hace que bajo el brazo vaya acumulando una serie de habilidades, que me permiten enfrentarme al día a día de la forma más eficiente
+                y adecuada posible. Habilidades, que para no olvidar, practico siempre que se me da la oportunidad, y de las que me siento orgulloso.
+            </p><br>
+            <p>Por ello, estas habilidades, tanto técnicas como introspectivas, hacen que sepa enfrentar los problemas de una forma muy distinta a la mayoría de la gente, obteniendo resultados de donde
+                no parece ser posible conseguirlos. 
+            </p><br>
+            <p>
+                Además, esta capacidad de compartir todo lo que tengo, hace que la gente vea en mí un referente en quien confiar, y a quien acudir en un momento de dificultad. Por tanto, me atrevo a decir que tengo el 
+                <b class="font-medium">privilegio</b> de ayudar, y ser un líder en dichas ocasiones, un privilegio que pienso cuidar y cultivar.
+            </p>
+            </div>
+
+        </div>
+    </div>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-5 md:h-screen magnetic " id="soft-skills">
+        <div class="md:h-screen text-center md:text-rightcol-span-1">
+            <h2 class="title-name  text-4xl xl:text-5xl text-white font-bold font-montserrat mt-10 md:mt-48">Contacto.</h2>
+        </div>
+        <div class="md:border-l border-white text-white p-5 font-roboto font-medium text-3xl md:col-span-2">
+            <h2 class="text-6xl font-roboto text-justify mx-auto w-full">John Nicolás  León Kabarity</h2>
+                <div class="font-normal font-inter mt-5 text-center text-lg">
+                    <div class="my-10"> <a class="border border-white p-2 hover:bg-white hover:text-black transition duration-500" href="tel:+34640570454"> <span class="material-symbols-outlined align-middle">call</span> +34 640 57 04 54</a> </div>
+                    <div class="my-10"> <a class="border border-white p-2 hover:bg-white hover:text-black transition duration-500" href="mailto:johnnicolasleon@gmail.com"> <span class="material-symbols-outlined align-middle">mail</span> johnnicolasleon@gmail.com</a> </div>
+                    <div class="my-10"> <a class="border border-white p-2 hover:bg-white hover:text-black transition duration-500" href="https://www.linkedin.com/in/john-nicolas-leon-kabarity/"> LinkedIn: John Nicolás León Kabarity</a> </div>
+                </div>
+        </div>
+    </div>
+    <script>
+        window.addEventListener("wheel", ev => {
+
+            const direction_1 = ev.deltaY;
+        
+            if (direction_1 < 0) console.log('scrolling up');
+            if (direction_1 > 0){
+                
+            }
+            
+        
+            const direction_2 = ev.wheelDeltaY;
+        
+            if (direction_2 > 0) console.log('scrolling up');
+            if (direction_2 < 0) console.log('scrolling down');
+        
+        });
+
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+
+        document.querySelector(this.getAttribute('href')).scrollIntoView({
+            behavior: 'smooth'
+        });
+    });
+});
+    </script>
+</body>
+</html>
